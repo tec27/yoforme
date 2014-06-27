@@ -1,0 +1,29 @@
+{
+  "name": "yobot-api",
+  "version": "0.0.0",
+  "description": "Simple API to send short messages to Yo users.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tec27/yobot-api"
+  },
+  "keywords": [
+    "yo",
+    "api"
+  ],
+  "author": "Travis Collins <travis@tec27.com> (http://tec27.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tec27/yobot-api/issues"
+  },
+  "homepage": "https://github.com/tec27/yobot-api",
+  "dependencies": {
+    "level": "^0.18.0",
+    "restify": "^2.8.1",
+    "yoplait": "^0.2.0"
+  }
+}
