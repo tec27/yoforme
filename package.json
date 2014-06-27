@@ -1,5 +1,5 @@
 {
-  "name": "yobot-api",
+  "name": "yoforme",
   "version": "0.0.0",
   "description": "Simple API to send short messages to Yo users.",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tec27/yobot-api"
+    "url": "https://github.com/tec27/yoforme"
   },
   "keywords": [
     "yo",
@@ -18,9 +18,9 @@
   "author": "Travis Collins <travis@tec27.com> (http://tec27.com/)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tec27/yobot-api/issues"
+    "url": "https://github.com/tec27/yoforme/issues"
   },
-  "homepage": "https://github.com/tec27/yobot-api",
+  "homepage": "https://github.com/tec27/yoforme",
   "dependencies": {
     "level": "^0.18.0",
     "restify": "^2.8.1",
