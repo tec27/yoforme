@@ -1,6 +1,9 @@
 var restify = require('restify')
   , yoplait = require('yoplait')
   , level = require('level')
+  , analytics = require('nodealytics')
+
+analytics.initialize('UA-4828044-5', 'yofor.me')
 
 var db = level('./data/', {
   createIfMissing: true,
@@ -18,9 +21,11 @@ function acquireUser(username, cb) {
     }
 
     yoplait.existingUser(username, value.udid, cb)
+    analytics.trackEvent('acquireUser', 'existing', function() {})
   })
 
   function registerUser() {
+    analytics.trackEvent('acquireUser', 'newSignup', function() {})
     var udid = yoplait.genUdid()
     yoplait.newUser(username, udid, function(err, yoUser) {
       if (err) {
@@ -77,6 +82,7 @@ function doYo(req, res, next) {
   acquireUser(req.params.message, function(err, yoUser) {
     if (err) {
       res.send(502, { code: err.serverCode, message: err.serverError })
+      analytics.trackEvent('sendYoResult', 'yoAcquireError', function() {})
       return next()
     }
 
@@ -84,10 +90,12 @@ function doYo(req, res, next) {
     yoUser.sendYo(yoTarget, function(err) {
       if (err) {
         res.send(502, { code: err.serverCode, message: err.serverError })
+        analytics.trackEvent('sendYoResult', 'yoSendError', function() {})
         return next()
       }
 
       res.send(200, { status: 'OK' })
+      analytics.trackEvent('sendYoResult', 'yoSent', function() {})
       next()
     })
   })

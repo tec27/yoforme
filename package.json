@@ -24,6 +24,7 @@
   "homepage": "https://github.com/tec27/yoforme",
   "dependencies": {
     "level": "^0.18.0",
+    "nodealytics": "0.0.6",
     "restify": "^2.8.1",
     "xhr": "^1.10.0",
     "yoplait": "^0.2.0"
