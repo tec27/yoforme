@@ -32,6 +32,8 @@ code strong {
 
 #content {
   max-width: 1000px;
+  min-width: 700px;
+  width: 80%;
   margin: 0px auto 10px auto;
   padding: 20px 40px;
   background-color: #F2F2F2;
@@ -41,6 +43,8 @@ code strong {
 
 #footer {
   max-width: 600px;
+  min-width: 500px;
+  width: 60%;
   margin: 20px auto 6px auto;
   padding: 8px 40px;
   background-color: #F2F2F2;
