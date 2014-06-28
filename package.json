@@ -4,6 +4,7 @@
   "description": "Simple API to send short messages to Yo users.",
   "main": "index.js",
   "scripts": {
+    "browserify": "browserify -o static/client.js client.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
@@ -24,6 +25,10 @@
   "dependencies": {
     "level": "^0.18.0",
     "restify": "^2.8.1",
+    "xhr": "^1.10.0",
     "yoplait": "^0.2.0"
+  },
+  "devDependencies": {
+    "browserify": "^4.2.0"
   }
 }

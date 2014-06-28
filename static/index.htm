@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>yofor.me</title>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700|Inconsolata:400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div id="content">
+      <h1>yofor.me</h1>
+      <p>An API for easily sending short messages through <a href="http://justyo.co">Yo</a>.</p>
+
+      <code>POST http://yofor.me/<strong>{target}</strong>/<strong>{message}</strong></code>
+
+      <p>Use it for:</p>
+      <ul>
+        <li>Reminders</li>
+        <li>Notifying yourself when long-running tasks complete</li>
+        <li>Annoying your friends</li>
+        <li>Impressing your loved ones</li>
+        <li>Evil <span class="aside">jk please don't :(</span></li>
+      </ul>
+      <h2>Demo</h2>
+      <form method="post" id="demo-form">
+        <input type="text" id="target-user" placeholder="Target" value="" />
+        <textarea id="message" placeholder="Message" maxlength="42"></textarea>
+        <input id="send-button" type="submit" value="Send" />
+      </form>
+      <div id="result" style="display: none;">
+        <h3>Result</h3>
+        <code id="result-text"></code>
+      </div>
+      <h2>Example usage</h2>
+      <h3>cURL</h3>
+      <p>Send a message to <strong>contra</strong> saying <strong>hey hi whats up</strong>:</p>
+      <code>$ curl -X POST http://yofor.me/<strong>contra</strong>/<strong>hey%20hi%20whats%20up</strong></code>
+      <p>Notify via Yo when a build is done:</p>
+      <code>$ make &amp;&amp; curl -X POST http://yofor.me/l33th4x/build%20is%20done\!</code>
+      <h3>node</h3>
+      <p>With <a href="https://npmjs.org/request">request</a>:</p>
+      <code>var request = require('request')
+
+request.post('http://yofor.me/contra/thanks%20for%20gulp', function(err) {
+  if (err) {
+    console.log('Error sending yo!')
+  } else {
+    console.log('Yo sent!')
+  }
+})</code>
+    </div>
+
+    <div id="footer">
+      <span>developed by <a href="https://twitter.com/tec27">tec27</a></span>
+      <span>fork on <a href="https://github.com/tec27/yoforme">github</a></span>
+      <span>chat on <a href="https://chat.meatspac.es">meatspace</a></span>
+    </div>
+    <script type="text/javascript" src="client.js"></script>
+  </body>
+</html>

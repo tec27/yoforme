@@ -48,6 +48,11 @@ server.listen(process.env.PORT || 7777, function() {
 server.use(restify.acceptParser(server.acceptable))
 server.use(restify.throttle({ rate: 1, burst: 5, ip: true }))
 
+server.get(/\/.*/, restify.serveStatic({
+  directory: './static',
+  default: 'index.htm'
+}))
+
 function validateTarget(req, res, next) {
   if (!req.params.target || !/^[A-Z][A-Z0-9]*$/i.test(req.params.target)) {
     return next(new restify.InvalidArgumentError('Yo targets must start with a letter, and only ' +
@@ -61,8 +66,8 @@ function validateMessage(req, res, next) {
   if (!req.params.message) {
     return next(new restify.InvalidArgumentError('Yo message must be specified'))
   }
-  if (req.params.message.length > 32) {
-    return next(new restify.InvalidArgumentError('Yo messages must be 32 characters or less'))
+  if (req.params.message.length > 42) {
+    return next(new restify.InvalidArgumentError('Yo messages must be 42 characters or less'))
   }
 
   next()
@@ -71,7 +76,7 @@ function validateMessage(req, res, next) {
 function doYo(req, res, next) {
   acquireUser(req.params.message, function(err, yoUser) {
     if (err) {
-      res.send(502)
+      res.send(502, { code: err.serverCode, message: err.serverError })
       return next()
     }
 
@@ -82,7 +87,7 @@ function doYo(req, res, next) {
         return next()
       }
 
-      res.send(200)
+      res.send(200, { status: 'OK' })
       next()
     })
   })
