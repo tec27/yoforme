@@ -41,7 +41,7 @@ function acquireUser(username, cb) {
 }
 
 var server = restify.createServer()
-server.listen(7777, function() {
+server.listen(process.env.PORT || 7777, function() {
   console.log('%s listening at %s', server.name, server.url)
 })
 
