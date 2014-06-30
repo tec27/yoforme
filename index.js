@@ -41,6 +41,17 @@ function acquireUser(username, cb, tries) {
     yoplait.signUp(username, udid, udid, function(err, yoUser) {
       if (err) {
         if (err.serverCode == 202 && err.serverError.indexOf('already taken') > -1) {
+          // Note that this account was taken in our DB by storing it, but not storing any info.
+          // This should speed up future requests for this name
+          db.get('user\xff' + username, function (err, value) {
+            if (err && err.notFound) {
+              // we verified that it wasn't just us that signed this user up, put it in the DB!
+              db.put('user\xff' + username, {}, function (err) {})
+            }
+            // the value is either already present (don't overwrite it!) or some other error, just
+            // silently drop this since its best effort
+          })
+
           // Try adding spaces lol!
           return acquireUser(username + ' ', cb, tries + 1)
         }
