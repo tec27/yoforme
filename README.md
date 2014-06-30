@@ -1,6 +1,8 @@
 # yoforme
 A simple API endpoint to send a short Yo message to a target user.
 
+[yofor.me](http://yofor.me)
+
 ##Rationale
 Yo can be useful as a way to send generic push notifications for almost anything,
 but to send any sort of information other than 'Yo' requires that we modify the

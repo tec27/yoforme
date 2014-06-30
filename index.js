@@ -10,7 +10,13 @@ var db = level('./data/', {
   valueEncoding: 'json'
 })
 
-function acquireUser(username, cb) {
+var MAX_USER_TRIES = 4
+function acquireUser(username, cb, tries) {
+  tries = tries || 0
+  if (tries >= MAX_USER_TRIES) {
+    return cb(new Error('Couldn\'t acquire user.'))
+  }
+
   db.get('user\xff' + username, function(err, value) {
     if (err) {
       if (!err.notFound) {
@@ -20,21 +26,30 @@ function acquireUser(username, cb) {
       }
     }
 
-    yoplait.existingUser(username, value.udid, cb)
-    analytics.trackEvent('acquireUser', 'existing', function() {})
+    if (value.sessionToken) {
+      yoplait.useExistingSession(value.udid, value.sessionToken, value.objectId, cb)
+      analytics.trackEvent('acquireUser', 'existing', function() {})
+    } else {
+      // pre-password user, it's lost forever, gotta use a different one (try adding spaces)
+      acquireUser(username + ' ', cb, tries + 1)
+    }
   })
 
   function registerUser() {
     analytics.trackEvent('acquireUser', 'newSignup', function() {})
     var udid = yoplait.genUdid()
-    yoplait.newUser(username, udid, function(err, yoUser) {
+    yoplait.signUp(username, udid, udid, function(err, yoUser) {
       if (err) {
-        // TODO(tec27): if the username is already registered but not by us, we can probably use
-        // unprintable/whitespace characters to register a similar looking name anyway
+        if (err.serverCode == 202 && err.serverError.indexOf('already taken') > -1) {
+          // Try adding spaces lol!
+          return acquireUser(username + ' ', cb, tries + 1)
+        }
+
         return cb(err)
       }
 
-      db.put('user\xff' + username, { udid: udid }, function(err) {
+      var dataEntry = { udid: udid, sessionToken: yoUser.sessionToken, objectId: yoUser.objectId }
+      db.put('user\xff' + username, dataEntry, function(err) {
         if (err) {
           return cb(err)
         }
