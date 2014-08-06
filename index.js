@@ -30,8 +30,8 @@ function acquireUser(username, cb, tries) {
       yoplait.useExistingSession(value.udid, value.sessionToken, value.objectId, cb)
       analytics.trackEvent('acquireUser', 'existing', function() {})
     } else {
-      // pre-password user, it's lost forever, gotta use a different one (try adding spaces)
-      acquireUser(username + ' ', cb, tries + 1)
+      // pre-password user, it's lost forever, gotta use a different one (try adding underscores)
+      acquireUser(username + '_', cb, tries + 1)
     }
   })
 
@@ -52,8 +52,8 @@ function acquireUser(username, cb, tries) {
             // silently drop this since its best effort
           })
 
-          // Try adding spaces lol!
-          return acquireUser(username + ' ', cb, tries + 1)
+          // Try adding underscores lol!
+          return acquireUser(username + '_', cb, tries + 1)
         }
 
         return cb(err)

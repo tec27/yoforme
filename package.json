@@ -27,7 +27,7 @@
     "nodealytics": "0.0.6",
     "restify": "^2.8.1",
     "xhr": "^1.13.0",
-    "yoplait": "^0.4.2"
+    "yoplait": "^0.5.0"
   },
   "devDependencies": {
     "browserify": "^5.9.1"
